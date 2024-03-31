@@ -1,95 +1,53 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import React, { useState } from 'react';
+import AddUser from './components/AddUser';
+import Hdr from './components/Hdr';
+import User from './components/User';
+import UsersList from './components/UsersList';
+import Favicon from "./favicon.ico";
 
-export default function Home() {
+const defaultUsers = [
+  {
+      id: 1,
+      name: 'Buzz Lightyear',
+      age: 10,
+      major: 'Computer Science',
+      img: 'https://www.sideshow.com/storage/product-images/911427/buzz-lightyear-d-stage_disney_square.jpg' // Placeholder path, replace with actual
+  },
+  {
+      id: 2,
+      name: 'Michael Cotterell',
+      age: 35,
+      major: 'Computer Science',
+      img: 'https://www.cs.uga.edu/sites/default/files/styles/square_400x400/public/headshot.png?itok=msEVSbrg' // Placeholder path, replace with actual
+  },
+  {
+      id: 3,
+      name: 'Courage The Cowardly Dog',
+      age: 45,
+      major: 'Theatre & Animation',
+      img: 'https://pyxis.nymag.com/v1/imgs/0c2/a83/4cfc644e76854d6cfe92f58219d2273a25-14-courage-the-cowardly-dog.rsquare.w400.jpg'
+  }
+];
+
+
+
+function Home() {
+  const [showAddUser, setShowAddUser] = useState(false);
+  const handleAddUserClick = () => {
+    setShowAddUser((prevShowAddUser) => !prevShowAddUser);
+  };
+  const [users, setUsers] = useState(defaultUsers);
+  const addUserHandler = (user) => {
+    setUsers((prevUsers) => [...prevUsers, user]);
+  };
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div>
+      <Hdr onAddUserClick={handleAddUserClick} />
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={users} />
+    </div>
   );
 }
+
+export default Home;
